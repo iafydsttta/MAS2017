@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Modeling Public Key Protocols Using Epistemic Logic</title>
+    
+
+    <meta name="description" content="Website for the course project of the multi-agent systems course, University of Groningen. Yannik Beckersjuergen, Mingcheng Ding, Jonathan Maas." />
+
+    <link href='http://fonts.googleapis.com/css?family=Quattrocento:400,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src='js/jquery.scrollto.js'></script>
+    
+</head>
+
+
+
+<body>
+
+
+<div id="wrapper">
+
+
+<header>
+    <div class="container clearfix">
+		<!--<div id="logo">-->
+			<!--<a href="http://callmenick.com"><img src="img/key_60x60.jpg" /></a>-->
+		<!--</div>-->
+        <div id="title">
+            <h1>Modeling Public Key Protocols Using Epistemic Logic</h1>
+			<h4>Yannik Beckersjürgen, Mingcheng Ding, & Jonathan Maas</h4>
+        </div>
+    </div>
+</header>
+
+
+
+<div id="main">
+    <div class="container clearfix">
+        
+        
+        <div id="sidebar">
+            <div id="nav-anchor"></div>
+            <nav>
+                <ul>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#theory">Theory</a></li>
+                    <li><a href="#implementation">Implementation</a></li>
+                    <li><a href="#application">Application</a></li>
+                    <li><a href="#discussion">Discussion</a></li>
+                </ul>
+            </nav>
+        </div><!-- /sidebar -->
+        
+        
+        <div id="content">
+            
+            
+        
+            <section id="introduction">
+                <h1>Introduction</h1>
+                <p>
+                    With the ever-growing digitalization of society, so too, should we ensure that such digitalization occurs in a responsible way. 
+					Most essential herein is how we may scale information-exchange as such that the principles that would hold in a personal environment, will also hold over the digital environment. 
+					Often, one may exchange information that is supposed to be secret, and should not be accessible to anyone else. In person, this is easy because one may personally verify the individual that the information is shared with. 
+					In information security, we denote the concept that information should be kept secret as <i>confidentiality</i>. When confidentiality is ensured, then there is no unauthorized access to information. 
+					However, sometimes, confidentiality is not that important. Instead, one may rather concern the <i>integrity</i> of a message, as such that one can be sure that the message was made by the right person, and not made by someone impersonating that person. I.E: you wish to ensure <i>authenticity</i> of a message.
+					Within an information security framework, it is important to understand some terminology. 
+					When sending a message, it may be <i>encrypted</i>, which is a process that transforms the message in such a way that it cannot be read by individuals who do not possess the right tools or information to <i>decrypt</i> it. Decryption and encryption conventionally involves the use of a "key" (a digital string of characters, or some password). It should be noted that the key used to encrypt a message is not neccesarily also used to decrypt the (encrypted) message, as we will see later. 
+					In addition to encryption and decryption, we should also include the process of hashing. Hashing is known as a technique by which one can create a unique <i>hash</i> (which is a finite, compact string of characters) from a message. The idea is that the hash is unique to this message, and that even the slightest change in the message will result in a vastly different hash code. 
+					Hashes are conventionally used to verify the authenticity of a message, and play a part in verifying whether the message at hand was truly written by the individual it claims to be. 
+                </p>
+            
+                <p>
+
+                </p>
+            </section>
+        
+        
+            <section id="theory">
+                <h1>Theory</h1>
+                <p> Within information security, the currently adopted algorithms (SSL, HTTPS, and many e-mail services) use <a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy">PGP</a>. PGP is an encryption protocol that operates a principle of <a href="https://en.wikipedia.org/wiki/Public-key_cryptography">Public-key cryptography</a> wherein a model of publically available and restricted knowledge can ensure both confidentiality, as well as authenticity within digital interactions.
+                </p>
+				<p> Public-key cryptography, as opposed to symmetric-key cryptography, uses two keys for encryption and decryption instead of a single one for both. 
+				The essential concept of public-key cryptography is best described by an example involving instantiated agents. Suppose Alice (A) and Bob (B) wish to communicate. Here, both agents have a key-pair, consisting of a <i>public key </i> and a <i>private key</i>. The public key (often denoted as S) is widely available for anyone, and can be considered common knowledge, whereas the private key (often denoted as P) is known only to the owner. 
+				If Alice wishes to send a secret message to Bob, she may encrypt the message using Bob's public key. Using the appropriate encryption algorithms (such as <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">RSA</a>), this encrypted message can only be decrypted using the appropriate private key, which only Bob possesses. 
+				
+				Alternatively, it may also be used to apply a signature to a message. Suppose Bob wishes to be sure that the message he sends cannot be falsified, and can be verified that he is the one who wrote it. He can then "sign" the message by encrypting it with his private key. The only way to read the message is by decrypting it using his public key, and since everyone knows that only Bob possesses the private key required to encrypt it this way, they'll know that only Bob could have written the message that he signed. 
+				
+				Encryption of message M using Alice's public key results in ciphertext C as: C = {M}<sub>A</sub>
+				Decryption of ciphertext C using Alice's private key: M=[C]<sub>A</sub>
+				Alice signs a message M as S = [M]<sub>A</sub>
+				
+				It should be noted that anyone can compute [C]<sub>A</sub>
+				</p>
+            
+                <p>
+				As part of our project, we can apply epistemic logic in visualising the mechanics of public-key cryptography. Herein, we consider not just a sender and receiver agents (as is the case in previous models), but instead adopt the conventional framework of an agent Alice, whom wishes to communicate with agent Bob. However, we consider security-related situations: one in which Eve, the eavesdropper, attempts to listen in on the communication between Alice and Bob. In the other, we consider Mitchell, whom is a Man-in-the-Middle, and attempts to not only intercept communication, but also modify messages, and impersonate the other agents in an attempt to distort communication. 
+				Within this framework, we can regard how knowledge transition operates by an adaptation of protocol A. Except we now have a third agent (either Eve or Mitch), whom stands in the middle of the channels.
+				Naturally, the goal here is now not only to ensure <i>safety</i> and <i>liveness</i>, but also to ensure <i>confidentiality</i> and <i>integrity</i>. Therefore, the goal is not only to ensure that all messages sent are also received correctly, and in the correct order, but also that there is no way that any information is read by a malicious agent. 
+				
+				
+				(Yannik, this part is obv up for discussion: )
+				In terms of logic, we may consider agent A (Alice) and B (Bob), as well as agent EVE and MIM. The private keys of A and B are denoted as S<sub>A</sub> and S<sub>B</sub> respectively, and public keys as P<sub>A</sub> and P<sub>B</sub>. A message encrypted by an agent i is denoted as {M}<sub>i</sub>. Decryption of an encrypted message can be represented by [ {M}<sub>A</sub> ]<sub>A</sub>.
+				It is important to note that encryption and decryption are inverse operations, as such that: M = {[M]<sub>A</sub>}<sub>A</sub> = [{M}<sub>A</sub>]<sub>A</sub>.
+				
+				Since the public keys of the agents is considered common knowledge, we can 
+				
+				
+				
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                    nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                    volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                    ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+                    Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+                    molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero
+                    eros et accumsan et iusto odio dignissim qui blandit praesent luptatum
+                    zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber
+                    tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+                    quod mazim placerat facer possim assum.
+                </p>
+            </section>
+        
+        
+            <section id="implementation">
+                <h1>Implementation</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                    nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                    volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                    ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                    Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+                    molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero
+                    eros et accumsan et iusto odio dignissim qui blandit praesent luptatum
+                    zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber
+                    tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+                    quod mazim placerat facer possim assum.
+                </p>
+            
+                <p>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                    nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                    volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                    ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                    Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+                    molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero
+                    eros et accumsan et iusto odio dignissim qui blandit praesent luptatum
+                    zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber
+                    tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+                    quod mazim placerat facer possim assum.
+                </p>
+            </section>
+        
+        
+            <section id="application">
+                <h1>Application</h1>
+                <p>
+					(insert some screenshot and talk here + download stuff)
+                </p>
+            
+				<!--<a href="link/to/your/download/file" download>Download link</a>-->
+				<div style="padding-top:5px; padding-bottom:15px">
+					<a href="img/key_60x60.jpg" style="color:rgb(0,0,204)" download>Download Application</a>
+				</div>	
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                    nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                    volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                    ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                    Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+                    molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero
+                    eros et accumsan et iusto odio dignissim qui blandit praesent luptatum
+                    zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber
+                    tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+                    quod mazim placerat facer possim assum.
+                </p>
+            </section>
+        
+        
+            <section id="discussion">
+                <h1>Discussion</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                    nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                    volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                    ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                    Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+                    molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero
+                    eros et accumsan et iusto odio dignissim qui blandit praesent luptatum
+                    zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber
+                    tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+                    quod mazim placerat facer possim assum.
+                </p>
+            
+                <p>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                    nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                    volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                    ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                    Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+                    molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero
+                    eros et accumsan et iusto odio dignissim qui blandit praesent luptatum
+                    zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber
+                    tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+                    quod mazim placerat facer possim assum.
+                </p>
+
+
+            </section>
+        
+        </div><!-- /#content -->
+        
+    </div>
+</div>
+
+
+<footer>
+    <div class="container">
+		<div class ="footertext">
+			<h4> Multi-Agent Systems 2016 - University of Groningen </h4>
+		</div>
+    </div>
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+    
+
+        
+    $(document).ready(function(){
+        
+        /** 
+         * This part does the "fixed navigation after scroll" functionality
+         * We use the jQuery function scroll() to recalculate our variables as the 
+         * page is scrolled/
+         */
+        $(window).scroll(function(){
+            var window_top = $(window).scrollTop() + 12; // the "12" should equal the margin-top value for nav.stick
+            var div_top = $('#nav-anchor').offset().top;
+                if (window_top > div_top) {
+                    $('nav').addClass('stick');
+                } else {
+                    $('nav').removeClass('stick');
+                }
+        });
+        
+        
+        /**
+         * This part causes smooth scrolling using scrollto.js
+         * We target all a tags inside the nav, and apply the scrollto.js to it.
+         */
+        $("nav a").click(function(evn){
+            evn.preventDefault();
+            $('html,body').scrollTo(this.hash, this.hash); 
+        });
+        
+        
+        
+        /**
+         * This part handles the highlighting functionality.
+         * We use the scroll functionality again, some array creation and 
+         * manipulation, class adding and class removing, and conditional testing
+         */
+        var aChildren = $("nav li").children(); // find the a children of the list items
+        var aArray = []; // create the empty aArray
+        for (var i=0; i < aChildren.length; i++) {    
+            var aChild = aChildren[i];
+            var ahref = $(aChild).attr('href');
+            aArray.push(ahref);
+        } // this for loop fills the aArray with attribute href values
+        
+        $(window).scroll(function(){
+            var windowPos = $(window).scrollTop(); // get the offset of the window from the top of page
+            var windowHeight = $(window).height(); // get the height of the window
+            var docHeight = $(document).height();
+            
+            for (var i=0; i < aArray.length; i++) {
+                var theID = aArray[i];
+                var divPos = $(theID).offset().top; // get the offset of the div from the top of page
+                var divHeight = $(theID).height(); // get the height of the div in question
+                if (windowPos >= divPos && windowPos < (divPos + divHeight)) {
+                    $("a[href='" + theID + "']").addClass("nav-active");
+                } else {
+                    $("a[href='" + theID + "']").removeClass("nav-active");
+                }
+            }
+            
+            if(windowPos + windowHeight == docHeight) {
+                if (!$("nav li:last-child a").hasClass("nav-active")) {
+                    var navActiveCurrent = $(".nav-active").attr("href");
+                    $("a[href='" + navActiveCurrent + "']").removeClass("nav-active");
+                    $("nav li:last-child a").addClass("nav-active");
+                }
+            }
+        });
+    });
+
+</script>
+
+
+
+
+</body>
+</html>
