@@ -87,26 +87,29 @@
                 <p> Within information security, the currently adopted algorithms (SSL, HTTPS, and many e-mail services) use <a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy">PGP</a>. PGP is an encryption protocol that operates a principle of <a href="https://en.wikipedia.org/wiki/Public-key_cryptography">Public-key cryptography</a> wherein a model of publically available and restricted knowledge can ensure both confidentiality, as well as authenticity within digital interactions.
                 </p>
 				<p> Public-key cryptography, as opposed to symmetric-key cryptography, uses two keys for encryption and decryption instead of a single one for both. 
-				The essential concept of public-key cryptography is best described by an example involving instantiated agents. Suppose Alice (A) and Bob (B) wish to communicate. Here, both agents have a key-pair, consisting of a <i>public key </i> and a <i>private key</i>. The public key (often denoted as S) is widely available for anyone, and can be considered common knowledge, whereas the private key (often denoted as P) is known only to the owner. 
+				The essential concept of public-key cryptography is best described by an example involving instantiated agents. Suppose Alice (A) and Bob (B) wish to communicate. Here, both agents have a key-pair, consisting of a <i>public key </i> and a <i>private key</i>. The public key (often denoted by S) is widely available for anyone, and can be considered common knowledge, whereas the private key (often denoted by P) is known only to the owner. 
 				If Alice wishes to send a secret message to Bob, she may encrypt the message using Bob's public key. Using the appropriate encryption algorithms (such as <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">RSA</a>), this encrypted message can only be decrypted using the appropriate private key, which only Bob possesses. 
 				
-				Alternatively, it may also be used to apply a signature to a message. Suppose Bob wishes to be sure that the message he sends cannot be falsified, and can be verified that he is the one who wrote it. He can then "sign" the message by encrypting it with his private key. The only way to read the message is by decrypting it using his public key, and since everyone knows that only Bob possesses the private key required to encrypt it this way, they'll know that only Bob could have written the message that he signed. 
-				
+				Alternatively, it may also be used to apply a signature to a message. Suppose Bob wishes to be sure that the message he sends cannot be falsified, and can be verified that he is the one who wrote it. He can then "sign" the message by encrypting it with his private key. The only way to read the message is by decrypting it using his public key, and since everyone knows that only Bob possesses the private key required to encrypt it this way, they will know that only Bob could have written the message that he signed. 
+				</p>
+				<p>
 				Encryption of message M using Alice's public key results in ciphertext C as: C = {M}<sub>A</sub>
+				<br>
 				Decryption of ciphertext C using Alice's private key: M=[C]<sub>A</sub>
+				<br>
 				Alice signs a message M as S = [M]<sub>A</sub>
-				
+				<br>
 				It should be noted that anyone can compute [C]<sub>A</sub>
 				</p>
             
                 <p>
-				As part of our project, we can apply epistemic logic in visualising the mechanics of public-key cryptography. Herein, we consider not just a sender and receiver agents (as is the case in previous models), but instead adopt the conventional framework of an agent Alice, whom wishes to communicate with agent Bob. However, we consider security-related situations: one in which Eve, the eavesdropper, attempts to listen in on the communication between Alice and Bob. In the other, we consider Mitchell, whom is a Man-in-the-Middle, and attempts to not only intercept communication, but also modify messages, and impersonate the other agents in an attempt to distort communication. 
-				Within this framework, we can regard how knowledge transition operates by an adaptation of protocol A. Except we now have a third agent (either Eve or Mitch), whom stands in the middle of the channels.
+				As part of our project, we can apply epistemic logic in visualising the mechanics of public-key cryptography. Herein, we consider not just sender and receiver agents (as is the case in previous models), but instead adopt the conventional framework of an agent Alice, who wishes to communicate with agent Bob. However, we consider security-related situations: one in which Eve, the eavesdropper, attempts to listen in on the communication between Alice and Bob. In the other, we consider Mitchell, who is a Man-in-the-Middle, and attempts to not only intercept communication, but also modify messages, and impersonate the other agents in an attempt to distort communication. 
+				Within this framework, we can regard how knowledge transition operates by an adaptation of protocol A. Except we now have a third agent (either Eve or Mitch), who stands in the middle of the channels.
 				Naturally, the goal here is now not only to ensure <i>safety</i> and <i>liveness</i>, but also to ensure <i>confidentiality</i> and <i>integrity</i>. Therefore, the goal is not only to ensure that all messages sent are also received correctly, and in the correct order, but also that there is no way that any information is read by a malicious agent. 
 				
 				
 				(Yannik, this part is obv up for discussion: )
-				In terms of logic, we may consider agent A (Alice) and B (Bob), as well as agent EVE and MIM. The private keys of A and B are denoted as S<sub>A</sub> and S<sub>B</sub> respectively, and public keys as P<sub>A</sub> and P<sub>B</sub>. A message encrypted by an agent i is denoted as {M}<sub>i</sub>. Decryption of an encrypted message can be represented by [ {M}<sub>A</sub> ]<sub>A</sub>.
+				In terms of logic, we may consider agent A (Alice) and B (Bob), as well as agent EVE and MIM. The private keys of A and B are denoted by S<sub>A</sub> and S<sub>B</sub> respectively, and public keys as P<sub>A</sub> and P<sub>B</sub>. A message encrypted by an agent i is denoted by {M}<sub>i</sub>. Decryption of an encrypted message can be represented by [ {M}<sub>A</sub> ]<sub>A</sub>.
 				It is important to note that encryption and decryption are inverse operations, as such that: M = {[M]<sub>A</sub>}<sub>A</sub> = [{M}<sub>A</sub>]<sub>A</sub>.
 				
 				Since the public keys of the agents is considered common knowledge, we can 
@@ -163,10 +166,14 @@
 					(insert some screenshot and talk here + download stuff)
                 </p>
             
-				<!--<a href="link/to/your/download/file" download>Download link</a>-->
+				<!--<div style="padding-top:5px; padding-bottom:15px">-->
+					<!--<a href="download_data/key_60x60.jpg" download>Download Application</a>-->
+				<!--</div>	-->
+
 				<div style="padding-top:5px; padding-bottom:15px">
-					<a href="img/key_60x60.jpg" download>Download Application</a>
-				</div>	
+					<a href="download_data/PGP.jar" download>Download Application</a>
+				</div>
+
 
                 <p>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
@@ -223,7 +230,7 @@
 <footer>
     <div class="container">
 		<div class ="footertext">
-			<h4> Multi-Agent Systems 2016 - University of Groningen </h4>
+			<h4> Multi-Agent Systems 2017 - University of Groningen </h4>
 		</div>
     </div>
 </footer>
