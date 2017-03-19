@@ -100,8 +100,8 @@
 				</p>
             
                 <p>
-				As part of our project, we can apply epistemic logic in visualising the mechanics of public-key cryptography. Herein, we consider not just a sender and receiver agents (as is the case in previous models), but instead adopt the conventional framework of an agent Alice, whom wishes to communicate with agent Bob. However, we consider security-related situations: one in which Eve, the eavesdropper, attempts to listen in on the communication between Alice and Bob. In the other, we consider Mitchell, whom is a Man-in-the-Middle, and attempts to not only intercept communication, but also modify messages, and impersonate the other agents in an attempt to distort communication. 
-				Within this framework, we can regard how knowledge transition operates by an adaptation of protocol A. Except we now have a third agent (either Eve or Mitch), whom stands in the middle of the channels.
+				As part of our project, we can apply epistemic logic in visualising the mechanics of public-key cryptography. Herein, we consider not just a sender and receiver agents (as is the case in previous models), but instead adopt the conventional framework of an agent Alice, who wishes to communicate with agent Bob. However, we consider security-related situations: one in which Eve, the eavesdropper, attempts to listen in on the communication between Alice and Bob. In the other, we consider Mitchell, who is a Man-in-the-Middle, and attempts to not only intercept communication, but also modify messages, and impersonate the other agents in an attempt to distort communication. 
+				Within this framework, we can regard how knowledge transition operates by an adaptation of protocol A. Except we now have a third agent (either Eve or Mitch), who stands in the middle of the channels.
 				Naturally, the goal here is now not only to ensure <i>safety</i> and <i>liveness</i>, but also to ensure <i>confidentiality</i> and <i>integrity</i>. Therefore, the goal is not only to ensure that all messages sent are also received correctly, and in the correct order, but also that there is no way that any information is read by a malicious agent. 
 				
 				
@@ -129,26 +129,27 @@
             <section id="implementation">
                 <h1>Implementation</h1>
                 <p>
-				We implemented our application by building on pre-existing code from protocol A. It is implemented in Java, and can be downloaded below.
-				
-                </p>
-            <img src="frameshot.PNG" alt="A screenshot of our application" style="width:720px;height:640px;">
+					We implemented our application by building on pre-existing code from protocol A. It is implemented in Java, and can be downloaded below.
+				</p>	
 
-				<!--<a href="link/to/your/download/file" download>Download link</a>-->
-				<div style="padding-top:5px; padding-bottom:15px">
-					<a href="img/key_60x60.jpg" style="color:rgb(0,0,204)" download>Download Application</a>
-				</div>	
+				<!--Download Button-->
+				<form method="get" action="files/PGP.jar">
+					<button type="submit">Download Application</button>
+				</form>
+				<br>		
 
-                <p>
-                    
+				<p>
+					You can run the application using <code> java -jar PGP.jar</code>. Below, we show a screenshot of the application.  
                 </p>
+
+				<img src="files/frameshot.PNG" alt="A screenshot of our application" style="width:720px;height:640px;">
+			
             </section>
-        
         
             <section id="discussion">
                 <h1>Discussion</h1>
                 <p>
-				(To be written later)
+					(To be written later)
                 </p>
             </section>
         
