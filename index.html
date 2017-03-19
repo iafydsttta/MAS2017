@@ -93,9 +93,12 @@
 				
 				Alternatively, it may also be used to apply a signature to a message. Suppose Bob wishes to be sure that the message he sends cannot be falsified, and can be verified that he is the one who wrote it. He can then "sign" the message by encrypting it with his private key. The only way to read the message is by decrypting it using his public key, and since everyone knows that only Bob possesses the private key required to encrypt it this way, they'll know that only Bob could have written the message that he signed. 
 				
+
+				<p>	
 				Encryption of message M using Alice's public key results in ciphertext C as: C = {M}<sub>A</sub>
-				Decryption of ciphertext C using Alice's private key: M=[C]<sub>A</sub>
-				Alice signs a message M as S = [M]<sub>A</sub>
+				<br>Decryption of ciphertext C using Alice's private key: M=[C]<sub>A</sub>
+				<br>Alice signs a message M as S = [M]<sub>A</sub>
+				</p>
 				
 				<!-- It should be noted that anyone can compute {C}<sub>A</sub> -->
 				</p>
@@ -103,14 +106,8 @@
                 <p>
 				As part of our project, we can apply epistemic logic in visualising the mechanics of public-key cryptography. Herein, we consider not just a sender and receiver agents (as is the case in previous models), but instead adopt the conventional framework of an agent Alice, who wishes to communicate with agent Bob. However, we consider security-related situations: one in which Eve, the eavesdropper, attempts to listen in on the communication between Alice and Bob. In the other, we consider Mitchell, who is a Man-in-the-Middle, and attempts to not only intercept communication, but also modify messages, and impersonate the other agents in an attempt to distort communication. 
 				Within this framework, we can regard how knowledge transition operates by an adaptation of protocol A. Except we now have a third agent (either Eve or Mitch), who stands in the middle of the channels.
-				Naturally, the goal here is now not only to ensure <i>safety</i> and <i>liveness</i>, but also to ensure <i>confidentiality</i> and <i>integrity</i>. Therefore, the goal is not only to ensure that all messages sent are also received correctly, and in the correct order, but also that there is no way that any information is read by a malicious agent. 
-				
-				
-				(Yannik, this part is obv up for discussion: )
-				In terms of logic, we may consider agent A (Alice) and B (Bob), as well as agent EVE and MIM. The private keys of A and B are denoted as S<sub>A</sub> and S<sub>B</sub> respectively, and public keys as P<sub>A</sub> and P<sub>B</sub>. A message encrypted by an agent i is denoted as {M}<sub>i</sub>. Decryption of an encrypted message can be represented by [ {M}<sub>A</sub> ]<sub>A</sub>.
-				It is important to note that encryption and decryption are inverse operations, as such that: M = {[M]<sub>A</sub>}<sub>A</sub> = [{M}<sub>A</sub>]<sub>A</sub>.
-				
-				
+				Naturally, the goal here is now not only to ensure <i>safety</i> and <i>liveness</i>, but also to ensure <i>confidentiality</i> and <i>integrity</i>. Therefore, the goal is not only to ensure that all messages sent are also received correctly, and in the correct order, but also that there is no way that any information is read by a malicious agent. In terms of logic, we may consider agent A (Alice) and B (Bob), as well as agent EVE and MIM. The private keys of A and B are denoted as S<sub>A</sub> and S<sub>B</sub> respectively, and public keys as P<sub>A</sub> and P<sub>B</sub>. A message encrypted by an agent i is denoted as {M}<sub>i</sub>. Decryption of an encrypted message can be represented by [ {M}<sub>A</sub> ]<sub>A</sub>.
+				It is important to note that encryption and decryption are inverse operations, as such that: M = {[M]<sub>A</sub>}<sub>A</sub> = [{M}<sub>A</sub>]<sub>A</sub>. We can represent knowledge using the epistemic operator K, where K<sub>i</sub>φ means that agent i knows φ. For instance, K<sub>A</sub> {φ}<sub>B</sub> represents a situation in which Alice knows (or has access to) message φ after it is encrypted using Bob's public key.
 				 </p>
             </section>
         
@@ -118,12 +115,12 @@
             <section id="project">
                 <h1>Project</h1>
                 <p>
-				For our project, we wish to visualize a public-key cryptography schema using Protocol A, which is described by Halpern and Zuck in  <a href="#footnoteHZ92">[1]</a>. 
-				Protocol A is used 
-				
-                    <!-- Include part here about protocol A, explain how logic is transferred, and protected against deletion errors -->
+					For our project, we wish to visualize a public-key cryptography schema using Protocol A, which is described by Halpern and Zuck in  <a href="#footnoteHZ92">[1]</a>. Protocol A is used to ensure that a sender can send messages to a receiver while preventing deletion errors when messages get lost during transmission. This is achieved by sending acknowledgements that messages have been received. Alice be the sender and Bob the receiver. If Alice wishes to send a mesage φ to Bob, then she repeatedly sends this message unitl Bob sends an acknowledgement K<sub>B</sub>φ. Alice then sends an acknowledgement on her own to Bob, namely K<sub>A</sub>K<sub>B</sub>φ until she receives the acknowledgement K<sub>B</sub>K<sub>A</sub>K<sub>B</sub>φ. At this point we have K<sub>A</sub>K<sub>B</sub>K<sub>A</sub>K<sub>B</sub>φ. The seemingly reduntant acknowledgements are needed in order to ensure that Bob knows that the next message he receives is a new message and that Alice is aware that Bob has this knowledge because if this is the case Alice can proceed by sending the next message she wishes to convey. This protocol is safe from deletion errors because messages are sent repeatedly until an acknowledgement is received. However, in its basic form, there is no protection against eavesdropping or a Man-in-the-Middle attack. Therefore, in our project we show how knowledge information is transmitted using both the basic protocol A and an adapted version using PGP in order to encrypt and decrypt messages. 
                 </p>
-            
+
+				<p>
+				For the PGP case, we assume that public keys are common knowledge. This means that everybody has access to (or knows)  P<sub>i</sub> for all agents i and that everybody knows this is the case (and that everybody knows this etc., ad infinitum). We use the epistemic operator C to express this fact: C P<sub>i</sub>.
+				</p>
             </section>
         
         
