@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Modeling Public Key Exchange in Epistemic Logic Protocols</title>
+	<title>Modeling Public Key Cryptography in Epistemic Logic Protocols</title>
     
 
     <meta name="description" content="Website for the course project of the multi-agent systems course, University of Groningen. Yannik Beckersjuergen, Mingcheng Ding, Jonathan Maas." />
@@ -32,7 +32,7 @@
 			<!--<a href="http://callmenick.com"><img src="img/key_60x60.jpg" /></a>-->
 		<!--</div>-->
         <div id="title">
-            <h1>Modeling Public Key Protocols Using Epistemic Logic</h1>
+            <h1>Modeling Public Key Cryptography in Epistemic Logic Protocols</h1>
 			<h4>Yannik Beckersjürgen, Mingcheng Ding, & Jonathan Maas</h4>
         </div>
     </div>
@@ -70,7 +70,7 @@
 					Most essential herein is how we may scale information-exchange as such that the principles that would hold in a personal environment, will also hold over the digital environment. 
 					Often, one may exchange information that is supposed to be secret, and should not be accessible to anyone else. In person, this is easy because one may personally verify the individual that the information is shared with. 
 					In information security, we denote the concept that information should be kept secret as <b>confidentiality</b>. When confidentiality is ensured, then there is no unauthorized access to information, and only the people who are meant to read a message will be able to read it.
-					However, sometimes, confidentiality is not that important. Instead, one may rather concern the <b>integrity</b> of a message, as such that one can be sure that the message was made by the right person, and not made by someone impersonating that person. I.E: you wish to ensure <i>authenticity</i> of a message.
+					However, sometimes, confidentiality is not that important. Instead, the main concern may be the <b>integrity</b> of a message, as such that one can be sure that the content of the message has not been altered by some third party. Finally, <b> authentication </b> ensures that the sender is really who he claims to be and not someone impersonating the sender.
 					
 					Though protocols have been developed to cope with loss of data across the internet, these fail to adress the security issues that rise with such digitalization.
             
@@ -86,16 +86,31 @@
 
 <!--					Within an information security framework, it is important to understand some terminology. 
 					When sending a message, it may be <i>encrypted</i>, which is a process that transforms the message in such a way that it cannot be read by individuals who do not possess the right tools or information to <i>decrypt</i> it. -->
-					Decryption and encryption conventionally involves the use of a "key" (a digital string of characters, or some password). This may be a single, shared mutual key that only both parties possess, which can be used to both encrypt and decrypt messages, but there may also be multiple keys in play, where a different key is used to decrypt. 
+					Decryption and encryption conventionally involves the use of a "key" (a digital string of characters, or some password). This may be a single, shared mutual key that only both parties possess (which can be used to both encrypt and decrypt messages), but there may also be multiple keys in play, where a different key is used to decrypt (see the images below for examples of both). 
 					
-					(!!!! INSERT IMAGES HERE OF SYMMETRIC ENCRYPTION/DECRYPTION!!! AND OF PUBLIC/PRIVATE ENCRYPTION/DECRYPTION!!!!)
+					<p>
+						<center>
+						<img src="files/Encryption_basic.png" alt="Image of symmetric encryption"> 	
+						</center>
+						<p> An example of symmetric encryption and decryption, using a single key for both operations</p>
+						
+						<center>
+						<img src="files/encrypt_publickey.png" alt="Image of public/private encryption">
+						
+						<p> An example of a public-key encryption and decryption. As shown, only one key is used to encrypt messages (which are directed at another agent), and only one key can be used to decrypt messages (which is in possession of this agent).
+						</center>
+					</p>
 					
 				<!--	In addition to encryption and decryption, we should also include the process of hashing. Hashing is known as a technique by which one can create a unique <i>hash</i> (which is a finite, compact string of characters) from a message. The idea is that the hash is unique to this message, and that even the slightest change in the message will result in a vastly different hash code. 
 					Hashes are conventionally used to verify the authenticity of a message, and play a part in verifying whether the message at hand was truly written by the individual it claims to be. -->
 					In order to ensure integrity of a message, we may adopt a different approach wherein we consider <i>signatures</i>. This involves a process wherein people can "sign" the messages they write with a digital signature, similar to the way wherein official documents are signed by a signature. The idea is that this digital signature is unique to the person who signs it, and that no one else can replicate the signature, but everyone can verify it. 
 					
-					(!!!INSERT IMAGE HERE OF MESSAGE SIGNING!!)
-					
+					<p>
+						<center>
+						<img src="files/encrypt_secret.png" alt="Image of encryption for signing"> 
+						<p> An example of digital signatures. As shown, signing of a message is performed by "encrypting" it using one's own private key. The message integrity can then be verified by all recipients, who may derive the original message content by "decrypting" it using the agent's public key, thereby proving that the message must have been written by this agent.</p>
+						</center>
+					<p>	
 					To ensure both confidentiality and integrity, and be able to implement an encryption/decryption scheme which also allows digital signatures, we need to use public-key cryptography.
                 </p>
 				
@@ -127,7 +142,7 @@
 				As part of our project, we attempt to visualise the mechanics of public-key cryptography using the epistemic-logic-based framework of the previously handled Protocol A, which is also described by Halpern and Zuck in <a href="#footnoteHZ92">[1]</a>. 
 				<h3>Protocol A</h3>
 				Protocol A is used to ensure that a sender can send messages to a receiver while preventing deletion errors when messages get lost during transmission. This is achieved by sending acknowledgements that messages have been received. Alice be the sender and Bob the receiver. If Alice wishes to send a mesage φ to Bob, then she repeatedly sends this message unitl Bob sends an acknowledgement K<sub><small>B</small></sub>φ. Alice then sends an acknowledgement on her own to Bob, namely K<sub><small>A</small></sub>K<sub><small>B</small></sub>φ until she receives the acknowledgement K<sub><small>B</small></sub>K<sub><small>A</small></sub>K<sub><small>B</small></sub>φ. At this point we have K<sub><small>A</small></sub>K<sub><small>B</small></sub>K<sub><small>A</small></sub>K<sub><small>B</small></sub>φ. The seemingly reduntant acknowledgements are needed in order to ensure that Bob knows that the next message he receives is a new message and that Alice is aware that Bob has this knowledge because if this is the case Alice can proceed by sending the next message she wishes to convey. This protocol is safe from deletion errors because messages are sent repeatedly until an acknowledgement is received. However, in its basic form, there is no protection against eavesdropping or a Man-in-the-Middle attack. 
-				
+				<br><br>		
 				<h3>Public-key cryptography</h3>
 				Therefore, in our project we show how knowledge information is transmitted using both the basic protocol A and a basic public-key cryptography implementation in order to encrypt and decrypt messages.
 				Here, we may introduce several new agents, and several situations: one in which Eve, an eavesdropper, attempts to listen in on the communication between Alice and Bob. In the other, we consider Mike, who serves as a Man-in-the-Middle, and attempts to not only intercept communication, but also modify messages, and impersonate the other agents in an attempt to distort communication. 
@@ -151,18 +166,50 @@
 				</p>	
 
 				<!--Download Button-->
-				<form method="get" action="files/PGP.jar">
+				<form method="get" action="files/mas_project.jar">
 					<button type="submit">Download Application</button>
 				</form>
 				<br>		
 
 				<p>
-					You can run the application using <code> java -jar PGP.jar</code>. 
+					You can run the application using <code> java -jar mas_project.jar</code>. (Note that it may happen that the browser downloads the file as a .zip instead of .jar. In that case rename it to mas_project.jar first.)
                 </p>
 
-				<img src="files/frameshot.PNG" alt="A screenshot of our application" style="width:720px;height:640px;">
+				<img src="files/programscreenshot.png" alt="A screenshot of our application" style="width:720px;height:640px;">
+				<br><br>
+				<p>
+				As can be seen in the screenshot (which shows an interceptor using PGP elements), we have implemented public key exchange cryptography elements into protocol A. Though admittedly, the interface appears cluttered, there is little improvement possible when visualizing a complex system such as PKC. We used color-coding to indicate inherent properties for agents, and used icons to indicate the features at play here. Alice is indicated by the colour orange, whereas Bob's color-code is bright-blue. See the legend below for elaboration on the icons:
 				
-				<p> Though the pre-existing code does allow for decent visualization, it is not perfect with respect to representing an elaborately deep logic. We extended the base protocol A to several cases showing how public-key cryptography can defend against eavesdropper and man-in-the-middle implementations. We still retain protocol A, but agregated the validation messages in grid form to save space. 
+				</p>
+				
+				<hr>
+				<div>
+					<img src="files/ALICE/E_ALICE.png" alt="image depicting lock" style="float:left">
+					<img src="files/BOB/e_bob.png" alt="image depicting lock" style="float:left">
+					<p>The locks indicating a message encrypted for Alice (left) and Bob (right).</p>
+				</div>
+				<div>
+				<hr>
+					<img src="files/ALICE/PKEY_ALICE.png" alt="image depicting lock " style="float:left"> 
+					<img src="files/BOB/PKEY_BOB.png" alt="image depicting lock " style="float:left">
+					<p>The icons used to represent Alice's (left) and Bob's (right) public keys, which are used to encrypt messages for them, and a publically known to everyone.</p>
+				</div>
+				<div>
+				<hr>
+					<img src="files/ALICE/SKEY_ALICE.png" alt="image depicting lock " style="float:left">
+					<img src="files/BOB/SKEY_BOB.png" alt="image depicting lock " style="float:left">
+					<p>The icons used to represent Alice's (left) and Bob's (right) private keys, which are used to decrypt messages encrypted by the respective public keys. The private keys are known only to the agent </p>
+				</div>
+				<div>
+				<hr>
+					<img src="files/ALICE/S_ALICE.png" alt="image depicting lock " style="float:left">
+					<img src="files/BOB/S_BOB.png" alt="image depicting lock " style="float:left">
+					<p>The icons used to represent signatures. A signature is technically added by encrypting a message using ones' private key. We indicate signed messages by adding this icon onto the message. The colour corresponds to the agent's signature (left for Alice's, right for Bob's).</p>
+				</div>
+				
+				<!-- I have absolutely NO IDEA what html does here, but for some reason part of the first sentence simply didn't show up... So I "fixed" it by copying the missing part and pasting it in front of it.. I can only hope it displays the intended way for everyone..-->
+				<p> 
+				Though the pre-existing code does allow for decent visualization, it is not perfect with respect to representing an elaborately deep logic. We extended the base protocol A to several cases showing how public-key cryptography can defend against eavesdropper and man-in-the-middle implementations. We still retain protocol A, but agregated the validation messages in grid form to save space.
 				</p>
 			
             </section>
@@ -186,12 +233,12 @@
 					TODO: MAYBE REFER TO WHAT OUR IMPLEMENTATION SHOWS, E.G. POSSIBLE ATTACKS ON PGP BY MIKE
 					<br>
 		-->		
-					Suppose that Alice desires to convey message M to Bob while guaranteeing both confidentiality and authenticity of the message. She can sign the message using her private key and then encrypt it using Bob's public key and send the encrypted message {[M]<sub><small>A</small></sub>}<sub><small>B</small></sub> to Bob, who can then decrypt it using his private key and Alice's public key. While such an encryption meets the requirements that Alice had when sending the message, it does not rule out all ill-intentioned actions. For example, Bob could decrypt the message to obtain [M]<sub><small>A</small></sub>, encrypt it with it with the public key of a third-party (say Thomas) and send the message {[M]<sub><small>A</small></sub>}<sub><small>T</small></sub> to Thomas in order to let him belief that Alice sent the message directly to him. Since Thomas has no way to know that Alice was not the sender of the message, he remains oblivious to the malicious practices at play here, as does Alice. Therefore, though first signing and then encrypting works formidably in simple settings, it is still susceptible to violations when we operate under a design wherein agents may change alliances over time. 
+					Suppose that Alice desires to convey message M to Bob while guaranteeing both confidentiality and integrity of the message. She can sign the message using her private key and then encrypt it using Bob's public key and send the encrypted message {[M]<sub><small>A</small></sub>}<sub><small>B</small></sub> to Bob, who can then decrypt it using his private key and Alice's public key. While such an encryption meets the requirements that Alice had when sending the message, it does not rule out all ill-intentioned actions. For example, Bob could decrypt the message to obtain [M]<sub><small>A</small></sub>, encrypt it with it with the public key of a third-party (say Thomas) and send the message {[M]<sub><small>A</small></sub>}<sub><small>T</small></sub> to Thomas in order to let him belief that Alice sent the message directly to him. Since Thomas has no way to know that Alice was not the sender of the message, he remains oblivious to the malicious practices at play here, as does Alice. Therefore, though first signing and then encrypting works formidably in simple settings, it is still susceptible to violations when we operate under a design wherein agents may change alliances over time. 
 <!--					to  Ideally, Thomas would know that the message could have been sent by any agent i for which K<sub><small>i</small></sub>[M]<sub><small>A</small></sub> holds, but taking {[M]<sub><small>A</small></sub>}<sub><small>T</small></sub> to mean that M was sent directly from Alice to Thomas is an easy mistake to make. This highlights that such a protocol is more susceptible to human error than to to technical attacks.               -->
 				</p>
 
 				<p>
-					Alternatively, we can consider an approach wherein Alice would instead first encrypt the message using Bob's public key and then sign it, after which she sends [{M}<sub><small>B</small></sub>]<sub><small>A</small></sub> to Bob, again guaranteeing authenticity and confidentiality of the message. However, if the message is intercepted by a man-in-the-middle (say Mike), he may remove Alice's signiture using her public key and sign it with his own private key, thereby deceiving Bob that the message {M}<sub><small>B</small></sub> was originally sent by Mike instead of Alice. Note that Mike does not have access to M itself as M was encrypted using Bob's public key, but he can pretend that he is the origin of M. It is clear how this could be an issue for messages related to ownership and property rights. As for the previous case with the reverse order of encryption ({[M]<sub><small>A</small></sub>}<sub><small>B</small></sub>), Bob should know that this only proves that K<sub><small>Mike</small></sub>{M}<sub><small>B</small></sub>, and that this does not prove that K<sub><small>Mike</small></sub>M, but this requires agents which are completely rational, which might hold for machines, but is less likely for human correspondents.
+					Alternatively, we can consider an approach wherein Alice would instead first encrypt the message using Bob's public key and then sign it, after which she sends [{M}<sub><small>B</small></sub>]<sub><small>A</small></sub> to Bob, again guaranteeing integrity and confidentiality of the message. However, if the message is intercepted by a man-in-the-middle (say Mike), he may remove Alice's signiture using her public key and sign it with his own private key, thereby deceiving Bob that the message {M}<sub><small>B</small></sub> was originally sent by Mike instead of Alice. Note that Mike does not have access to M itself as M was encrypted using Bob's public key, but he can pretend that he is the origin of M. It is clear how this could be an issue for messages related to ownership and property rights. As for the previous case with the reverse order of encryption ({[M]<sub><small>A</small></sub>}<sub><small>B</small></sub>), Bob should know that this only proves that K<sub><small>Mike</small></sub>{M}<sub><small>B</small></sub>, and that this does not prove that K<sub><small>Mike</small></sub>M, but this requires agents which are completely rational, which might hold for machines, but is less likely for human correspondents.
 				</p>
 
 				<!--
